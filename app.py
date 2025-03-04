@@ -137,9 +137,9 @@ if st.button('Run Analysis'):
                     screened.append(tickers)
                 else:
                     pass
-            st.session_state.screened = screened
+            screened
             st.subheader('Screened Tickers (Both Bullish and Bearish Divergences):')
-            st.write(st.session_state.screened)
+            st.write(screened)
 
             if screened: #check if the screened list is not empty.
                 selected_ticker = st.selectbox("Select a Ticker to Plot", screened)
@@ -152,13 +152,9 @@ if st.button('Run Analysis'):
                     rsi_cleaned = rsi_values[ticker_index].ravel()
                     dates = closes[ticker_index].index
                     plot(close_cleaned, rsi_cleaned, divergence_values[selected_ticker], selected_ticker, INTERVAL)
+            else:
+                continue
 
-            if divergence_values:
-                for i, ticker in enumerate(TICKERS):
-                    if ticker in divergence_values:
-                        close_cleaned = closes[i].values.ravel()
-                        rsi_cleaned = rsi_values[i].ravel()
-                        dates = closes[i].index
                         #plot_divergences(close_cleaned, rsi_cleaned, divergence_values[ticker], ticker, INTERVAL, dates)
         except Exception as e:
             st.error(f"An error occurred: {e}")
