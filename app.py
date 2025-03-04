@@ -90,7 +90,8 @@ def main(tickers, interval, period='1mo', start_date=None, end_date=None):
     all_divergences = {}
     close_prices = []
     rsi_values = []
-    for ticker in tickers:
+    progress_bar = st.progress(0)
+    for i, ticker in enumerate(tickers):
         try:
             ticker_data = download(symbol=ticker+'.NS', interval=interval, period=period, start_date=start_date, end_date=end_date)
             close = ticker_data['Close']
@@ -103,17 +104,26 @@ def main(tickers, interval, period='1mo', start_date=None, end_date=None):
             all_divergences[ticker] = divergences
         except Exception as e:
             st.error(f'Error in {ticker}: {e}')
+        progress_bar.progress((i + 1) / len(tickers)) #update progress bar
     return all_divergences, close_prices, rsi_values
 
 # --- Streamlit App ---
+st.set_page_config(layout="wide")
 st.title('RSI Divergence Screener')
 
 # Inputs
 uploaded_file = st.file_uploader("Upload CSV with Symbols (for Ticker name only, data will be downloaded by Yfinance function)", type=["csv"])
-INTERVAL = st.selectbox('Interval', ['1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo'], index=8)
-PERIOD = st.selectbox('Period', ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'], index=0)
-START_DATE = st.date_input('Start Date', value=None)
-END_DATE = st.date_input('End Date', value=None)
+col1, col2 = st.columns(2)
+with col1:
+    INTERVAL = st.selectbox('Interval', ['1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo'], index=8)
+with col2:
+    PERIOD = st.selectbox('Period', ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'], index=0)
+
+col3, col4 = st.columns(2)
+with col3:
+    START_DATE = st.date_input('Start Date', value=None)
+with col4:
+    END_DATE = st.date_input('End Date', value=None)
 
 if st.button('Run Analysis'):
     if uploaded_file is not None:
