@@ -133,9 +133,11 @@ if st.button('Run Analysis'):
 
             divergence_values, closes, rsi_values = main(TICKERS, INTERVAL, PERIOD, START_DATE, END_DATE)
             screened = []
-            for ticker, divergences in divergence_values.items():
-                if divergences['bullish'] and divergences['bearish']: #corrected filtering logic.
-                    screened.append(ticker)
+            for tickers, divergences in divergence_values.items():
+                if len(divergences['bullish']) and len(divergences['bearish']) == 0:
+                    screened.append(tickers)
+                else:
+                    pass
 
             st.subheader('Screened Tickers (Both Bullish and Bearish Divergences):')
             st.write(screened)
