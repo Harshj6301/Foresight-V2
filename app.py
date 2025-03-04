@@ -143,6 +143,8 @@ if st.button('Run Analysis'):
 
             if screened: #check if the screened list is not empty.
                 selected_ticker = st.selectbox("Select a Ticker to Plot", screened)
+            else:
+                pass
 
             if selected_ticker:
                     ticker_index = TICKERS.index(selected_ticker) #get index from original ticker list.
