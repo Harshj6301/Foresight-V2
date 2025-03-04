@@ -147,11 +147,11 @@ if st.button('Run Analysis'):
                 pass
 
             if selected_ticker:
-                    ticker_index = TICKERS.index(selected_ticker) #get index from original ticker list.
-                    close_cleaned = closes[ticker_index].values.ravel()
-                    rsi_cleaned = rsi_values[ticker_index].ravel()
-                    dates = closes[ticker_index].index
-                    plot(close_cleaned, rsi_cleaned, divergence_values[selected_ticker], selected_ticker, INTERVAL)
+                ticker_index = TICKERS.index(selected_ticker) #get index from original ticker list.
+                close_cleaned = closes[ticker_index].values.ravel()
+                rsi_cleaned = rsi_values[ticker_index].ravel()
+                dates = closes[ticker_index].index
+                plot(close_cleaned, rsi_cleaned, divergence_values[selected_ticker], selected_ticker, INTERVAL)
             else:
                 continue
 
