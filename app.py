@@ -5,7 +5,6 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import yfinance as yf
 import datetime
-import pandas_ta as ta
 from scipy.signal import find_peaks
 
 # --- Functions ---
