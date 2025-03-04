@@ -59,33 +59,6 @@ def find_closest_index(indices, target_idx, max_distance=200):
         return min_idx
     return None
 
-"""def plot_divergences(close_prices, rsi_values, divergences, ticker, interval, dates=None):
-    if dates is None:
-        dates = np.arange(len(close_prices))
-    plt.style.use('dark_background')
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), gridspec_kw={'height_ratios': [2, 1]})
-    ax1.plot(dates, close_prices, color='skyblue')
-    ax1.set_title(f'Scrip: {ticker} {interval}', size=12)
-    ax1.set_ylabel('Price')
-    ax2.plot(dates, rsi_values, color='orange')
-    ax2.axhline(y=70, color='r', linestyle='--', alpha=0.5)
-    ax2.axhline(y=30, color='g', linestyle='--', alpha=0.5)
-    ax2.set_title('RSI Indicator')
-    ax2.set_ylabel('RSI')
-    ax2.set_ylim(0, 100)
-    for price_idx, rsi_idx in divergences['bullish']:
-        ax1.plot([dates[price_idx-1], dates[price_idx]], [close_prices[price_idx-1], close_prices[price_idx]], 'g-', linewidth=2)
-        ax1.plot(dates[price_idx], close_prices[price_idx], 'go', markersize=4)
-        ax2.plot([dates[rsi_idx-1], dates[rsi_idx]], [rsi_values[rsi_idx-1], rsi_values[rsi_idx]], 'g-', linewidth=2)
-        ax2.plot(dates[rsi_idx], rsi_values[rsi_idx], 'go', markersize=4)
-    for price_idx, rsi_idx in divergences['bearish']:
-        ax1.plot([dates[price_idx-1], dates[price_idx]], [close_prices[price_idx-1], close_prices[price_idx]], 'r-', linewidth=2)
-        ax1.plot(dates[price_idx], close_prices[price_idx], 'ro', markersize=4)
-        ax2.plot([dates[rsi_idx-1], dates[rsi_idx]], [rsi_values[rsi_idx-1], rsi_values[rsi_idx]], 'r-', linewidth=2)
-        ax2.plot(dates[rsi_idx], rsi_values[rsi_idx], 'ro', markersize=4)
-    plt.tight_layout()
-    st.pyplot(fig)"""
-
 def plot(close_prices, rsi_values, divergences, ticker, interval):
     plt.style.use('dark_background')
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), gridspec_kw={'height_ratios': [2, 1]})
