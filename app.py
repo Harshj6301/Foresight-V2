@@ -137,9 +137,9 @@ if st.button('Run Analysis'):
                     screened.append(tickers)
                 else:
                     pass
-
+            st.session_state.screened = screened
             st.subheader('Screened Tickers (Both Bullish and Bearish Divergences):')
-            st.write(screened)
+            st.write(st.session_state.screened)
 
             if screened: #check if the screened list is not empty.
                 selected_ticker = st.selectbox("Select a Ticker to Plot", screened)
