@@ -87,7 +87,7 @@ def find_closest_index(indices, target_idx, max_distance=200):
     st.pyplot(fig)"""
 
 def plot(close_prices, rsi_values, divergences, ticker, interval):
-    plt.style.use('dark_background)
+    plt.style.use('dark_background')
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), gridspec_kw={'height_ratios': [2, 1]})
     ax1.plot(dates, close_prices, color='skyblue')
     ax1.set_title(f'Scrip: {ticker} {interval}', size=12)
