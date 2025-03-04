@@ -109,7 +109,7 @@ def main(tickers, interval, period='1mo', start_date=None, end_date=None):
 st.title('RSI Divergence Screener')
 
 # Inputs
-uploaded_file = st.file_uploader("Upload CSV with Symbols", type=["csv"])
+uploaded_file = st.file_uploader("Upload CSV with Symbols (for Ticker name only, data will be downloaded by Yfinance function)", type=["csv"])
 INTERVAL = st.selectbox('Interval', ['1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo'], index=8)
 PERIOD = st.selectbox('Period', ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'], index=0)
 START_DATE = st.date_input('Start Date', value=None)
@@ -124,10 +124,10 @@ if st.button('Run Analysis'):
             divergence_values, closes, rsi_values = main(TICKERS, INTERVAL, PERIOD, START_DATE, END_DATE)
             screened = []
             for ticker, divergences in divergence_values.items():
-                if divergences['bullish'] and not divergences['bearish']:
+                if divergences['bullish'] and divergences['bearish']: #corrected filtering logic.
                     screened.append(ticker)
 
-            st.subheader('Screened Tickers (Bullish Divergence Only):')
+            st.subheader('Screened Tickers (Both Bullish and Bearish Divergences):')
             st.write(screened)
 
             if divergence_values:
@@ -136,7 +136,7 @@ if st.button('Run Analysis'):
                         close_cleaned = closes[i].values.ravel()
                         rsi_cleaned = rsi_values[i].ravel()
                         dates = closes[i].index
-                        plot_divergences(close_cleaned, rsi_cleaned, divergence_values[ticker], ticker, INTERVAL, dates)
+                        #plot_divergences(close_cleaned, rsi_cleaned, divergence_values[ticker], ticker, INTERVAL, dates)
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
