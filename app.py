@@ -117,7 +117,7 @@ col1, col2 = st.columns(2)
 with col1:
     INTERVAL = st.selectbox('Interval', ['1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo'], index=8)
 with col2:
-    PERIOD = st.selectbox('Period', ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'], index=0, value=None)
+    PERIOD = st.selectbox('Period', ['1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'], index=None)
 
 col3, col4 = st.columns(2)
 with col3:
