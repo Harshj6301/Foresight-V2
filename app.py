@@ -61,7 +61,7 @@ def find_closest_index(indices, target_idx, max_distance=200):
 
 def plot(close_prices, rsi_values, divergences, ticker, interval):
     plt.style.use('dark_background')
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), gridspec_kw={'height_ratios': [2, 1]})
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 5), gridspec_kw={'height_ratios': [2, 1]})
     ax1.plot(dates, close_prices, color='skyblue')
     ax1.set_title(f'Scrip: {ticker} {interval}', size=12)
     ax1.set_ylabel('Price')
@@ -137,20 +137,23 @@ if st.button('Run Analysis'):
                     screened.append(tickers)
                 else:
                     pass
-            screened
+            
             st.subheader('Screened Tickers (Both Bullish and Bearish Divergences):')
             st.write(screened)
-            
-            selected_ticker = st.selectbox("Select a Ticker to Plot", screened)
-            ticker_index = TICKERS.index(selected_ticker) #get index from original ticker list.
-            close_cleaned = closes[ticker_index].values.ravel()
-            rsi_cleaned = rsi_values[ticker_index].ravel()
-            dates = closes[ticker_index].index
-            plot(close_cleaned, rsi_cleaned, divergence_values[selected_ticker], selected_ticker, INTERVAL)
-            
-
-                        #plot_divergences(close_cleaned, rsi_cleaned, divergence_values[ticker], ticker, INTERVAL, dates)
         except Exception as e:
             st.error(f"An error occurred: {e}")
-    else:
-        st.warning("Please upload a CSV file with symbols.")
+else:
+    st.warning("Please upload a CSV file with symbols.")
+            
+try:
+    selected_ticker = st.selectbox("Select a Ticker to Plot", screened)
+    ticker_index = TICKERS.index(selected_ticker) #get index from original ticker list.
+    close_cleaned = closes[ticker_index].values.ravel()
+    rsi_cleaned = rsi_values[ticker_index].ravel()
+    dates = closes[ticker_index].index
+    plot(close_cleaned, rsi_cleaned, divergence_values[selected_ticker], selected_ticker, INTERVAL)
+except:
+    pass
+
+                        #plot_divergences(close_cleaned, rsi_cleaned, divergence_values[ticker], ticker, INTERVAL, dates)
+       
