@@ -140,20 +140,14 @@ if st.button('Run Analysis'):
             screened
             st.subheader('Screened Tickers (Both Bullish and Bearish Divergences):')
             st.write(screened)
-
-            if screened: #check if the screened list is not empty.
-                selected_ticker = st.selectbox("Select a Ticker to Plot", screened)
-            else:
-                pass
-
-            if selected_ticker:
-                ticker_index = TICKERS.index(selected_ticker) #get index from original ticker list.
-                close_cleaned = closes[ticker_index].values.ravel()
-                rsi_cleaned = rsi_values[ticker_index].ravel()
-                dates = closes[ticker_index].index
-                plot(close_cleaned, rsi_cleaned, divergence_values[selected_ticker], selected_ticker, INTERVAL)
-            else:
-                continue
+            
+            selected_ticker = st.selectbox("Select a Ticker to Plot", screened)
+            ticker_index = TICKERS.index(selected_ticker) #get index from original ticker list.
+            close_cleaned = closes[ticker_index].values.ravel()
+            rsi_cleaned = rsi_values[ticker_index].ravel()
+            dates = closes[ticker_index].index
+            plot(close_cleaned, rsi_cleaned, divergence_values[selected_ticker], selected_ticker, INTERVAL)
+            
 
                         #plot_divergences(close_cleaned, rsi_cleaned, divergence_values[ticker], ticker, INTERVAL, dates)
         except Exception as e:
