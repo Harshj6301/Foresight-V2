@@ -119,7 +119,7 @@ if st.button('Run Analysis'):
             
             st.subheader('Screened Tickers (Both Bullish and Bearish Divergences):')
             st.write(screened)
-            del TICKERS, divergence_values, closes, rsi_values
+           # del TICKERS, divergence_values, closes, rsi_values
     
         except Exception as e:
             st.error(f"An error occurred: {e}")
