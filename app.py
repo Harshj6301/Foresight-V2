@@ -8,10 +8,12 @@ import datetime
 from scipy.signal import find_peaks
 
 # --- Functions ---
+@st.cache_data
 def download(symbol, interval, period='1mo', start_date=None, end_date=None):
     data = yf.download(tickers=symbol, interval=interval, period=period, start=start_date, end=end_date)
     return data
 
+@st.cache_data
 def calculate_rsi_wilder(close_prices, period=14):
     delta = close_prices.diff()
     gain = delta.where(delta > 0, 0)
@@ -22,6 +24,7 @@ def calculate_rsi_wilder(close_prices, period=14):
     rsi = 100 - (100 / (1 + rs))
     return rsi
 
+@st.cache_data
 def identify_divergences(close_prices, rsi_values, window=5, prominence=2):
     # ... (your identify_divergences function) ...
     price_peaks, _ = find_peaks(close_prices, distance=window, prominence=prominence)
@@ -50,6 +53,7 @@ def identify_divergences(close_prices, rsi_values, window=5, prominence=2):
                     bearish_div.append((price_idx2, idx2))
     return {'bullish': bullish_div, 'bearish': bearish_div}
 
+@st.cache_data
 def find_closest_index(indices, target_idx, max_distance=200):
     if len(indices) == 0:
         return None
@@ -59,6 +63,7 @@ def find_closest_index(indices, target_idx, max_distance=200):
         return min_idx
     return None    
 
+@st.cache_data
 def main(tickers, interval, period='1mo', start_date=None, end_date=None):
     all_divergences = {}
     close_prices = []
