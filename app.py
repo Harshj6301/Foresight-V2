@@ -118,6 +118,8 @@ if st.button('Run Analysis'):
             st.error(f"An error occurred: {e}")
 else:
     st.warning("Please upload a CSV file with symbols.")
+
+del TICKERS, divergence_values, closes, rsi_values
             
 
                         #plot_divergences(close_cleaned, rsi_cleaned, divergence_values[ticker], ticker, INTERVAL, dates)
