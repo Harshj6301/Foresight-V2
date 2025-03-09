@@ -78,9 +78,9 @@ def main(tickers, interval, period='1mo', start_date=None, end_date=None):
             rsi_values.append(rsi_cleaned)
             divergences = identify_divergences(close_cleaned, rsi_cleaned)
             all_divergences[ticker] = divergences
+            progress_bar.progress((i + 1) / len(tickers)) #update progress bar
         except Exception as e:
             st.error(f'Error in {ticker}: {e}')
-            progress_bar.progress((i + 1) / len(tickers)) #update progress bar
     return all_divergences, close_prices, rsi_values
 
 # --- Streamlit App ---
