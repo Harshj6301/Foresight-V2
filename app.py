@@ -80,7 +80,7 @@ def main(tickers, interval, period='1mo', start_date=None, end_date=None):
             all_divergences[ticker] = divergences
         except Exception as e:
             st.error(f'Error in {ticker}: {e}')
-        progress_bar.progress((i + 1) / len(tickers)) #update progress bar
+            progress_bar.progress((i + 1) / len(tickers)) #update progress bar
     return all_divergences, close_prices, rsi_values
 
 # --- Streamlit App ---
