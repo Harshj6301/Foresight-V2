@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
-import matplotlib.pyplot as plt
 import yfinance as yf
 import datetime
 from scipy.signal import find_peaks
@@ -119,6 +117,7 @@ if st.button('Run Analysis'):
             
             st.subheader('Screened Tickers (Both Bullish and Bearish Divergences):')
             st.write(screened)
+            st.write(df.info())
            # del TICKERS, divergence_values, closes, rsi_values
     
         except Exception as e:
