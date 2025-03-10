@@ -2,7 +2,5 @@ yfinance
 pandas_ta
 pandas
 numpy
-matplotlib
-plotly
 datetime
 scipy
