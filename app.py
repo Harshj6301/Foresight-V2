@@ -3,17 +3,21 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 from scipy.signal import find_peaks
+import datetime
+
+# Current date
+today = datetime.date.today()
 
 # Symbol path
 NSE_FnO = "Assets/symbol lists/Futures all scan, Technical Analysis Scanner.csv"
 Nifty_500 = "Assets/symbol lists/Stock Screener, Technical Analysis Scanner.csv"
 # --- Functions ---
-@st.cache_data
+#@st.cache_data
 def download(symbol, interval, period='1mo', start_date=None, end_date=None):
     data = yf.download(tickers=symbol, interval=interval, period=period, start=start_date, end=end_date)
     return data
 
-@st.cache_data
+#@st.cache_data
 def calculate_rsi_wilder(close_prices, period=14):
     delta = close_prices.diff()
     gain = delta.where(delta > 0, 0)
@@ -24,7 +28,7 @@ def calculate_rsi_wilder(close_prices, period=14):
     rsi = 100 - (100 / (1 + rs))
     return rsi
 
-@st.cache_data
+#@st.cache_data
 def identify_divergences(close_prices, rsi_values, window=5, prominence=2):
     price_peaks, _ = find_peaks(close_prices, distance=window, prominence=prominence)
     price_troughs, _ = find_peaks(-np.array(close_prices), distance=window, prominence=prominence)
@@ -52,7 +56,7 @@ def identify_divergences(close_prices, rsi_values, window=5, prominence=2):
                     bearish_div.append((price_idx2, idx2))
     return {'bullish': bullish_div, 'bearish': bearish_div}
 
-@st.cache_data
+#@st.cache_data
 def find_closest_index(indices, target_idx, max_distance=200):
     if len(indices) == 0:
         return None
@@ -110,7 +114,7 @@ col3, col4 = st.columns(2)
 with col3:
     START_DATE = st.date_input('Start Date', value=None)
 with col4:
-    END_DATE = st.date_input('End Date', value=None)
+    END_DATE = st.date_input('End Date', value=today, max_value=today)
 
 if st.button('Run Analysis'):
     if selected_file is not None:
