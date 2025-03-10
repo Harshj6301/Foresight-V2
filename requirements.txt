@@ -1,6 +1,5 @@
 yfinance
-pandas_ta
 pandas
 numpy
-datetime
 scipy
+streamlit
