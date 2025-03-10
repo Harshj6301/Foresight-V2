@@ -4,6 +4,9 @@ import numpy as np
 import yfinance as yf
 from scipy.signal import find_peaks
 
+# Symbol path
+NSE_FnO = "Assets/symbol lists/Futures all scan, Technical Analysis Scanner.csv"
+Nifty_500 = "Assets/symbol lists/Stock Screener, Technical Analysis Scanner.csv"
 # --- Functions ---
 @st.cache_data
 def download(symbol, interval, period='1mo', start_date=None, end_date=None):
@@ -85,7 +88,18 @@ st.set_page_config(layout="wide")
 st.title('RSI Divergence Screener')
 
 # Inputs
-uploaded_file = st.file_uploader("Upload CSV with Symbols (for Ticker name only, data will be downloaded by Yfinance function)", type=["csv"])
+uploaded_file = st.file_uploader("Upload CSV with Symbols or select from below (for Ticker name only, data will be downloaded by Yfinance function)", type=["csv"])
+file_list = st.radio("Select list category below", ["NSE FnO","NIfty 500", "Uploaded file"])
+st.subheader('---')
+
+if file_list == 'Uploaded file':
+    selected_file = uploaded_file
+elif file_list == 'NSE FnO':
+    selected_file = NSE_FnO
+else:
+    selected_file = Nifty_500
+
+
 col1, col2 = st.columns(2)
 with col1:
     INTERVAL = st.selectbox('Interval', ['1m', '2m', '5m', '15m', '30m', '60m', '90m', '1h', '1d', '5d', '1wk', '1mo', '3mo'], index=8)
@@ -99,9 +113,9 @@ with col4:
     END_DATE = st.date_input('End Date', value=None)
 
 if st.button('Run Analysis'):
-    if uploaded_file is not None:
+    if selected_file is not None:
         try:
-            df = pd.read_csv(uploaded_file, usecols=['Symbol'])
+            df = pd.read_csv(selected_file, usecols=['Symbol'])
             if 'Symbol' not in df.columns:
                 st.error("CSV must contain a 'Symbol' column.")
                 st.stop()
@@ -111,7 +125,7 @@ if st.button('Run Analysis'):
             for tickers, divergences in divergence_values.items():
                 if len(divergences['bullish']) and len(divergences['bearish']) == 0:
                     screened.append(tickers)
-            st.subheader('Screened Tickers (Bullish Divergence Only):')
+            st.subheader('Screened Tickers:')
             st.write(screened)
             st.write(df.info())
             del TICKERS, divergence_values, closes, rsi_values #clear memory
