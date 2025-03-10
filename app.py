@@ -3,10 +3,6 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 from scipy.signal import find_peaks
-import datetime
-
-# Current date
-today = datetime.date.today()
 
 # Symbol path
 NSE_FnO = "Assets/symbol lists/Futures all scan, Technical Analysis Scanner.csv"
@@ -117,7 +113,7 @@ col3, col4 = st.columns(2)
 with col3:
     START_DATE = st.date_input('Start Date', value=None)
 with col4:
-    END_DATE = st.date_input('End Date', value=today, max_value=None)
+    END_DATE = st.date_input('End Date', value=None)
 
 if st.button('Run Analysis'):
     if selected_file is not None:
