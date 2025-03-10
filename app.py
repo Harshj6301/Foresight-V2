@@ -73,7 +73,10 @@ def main(tickers, interval, period='1mo', start_date=None, end_date=None):
     progress_bar = st.progress(0)
     for i, ticker in enumerate(tickers):
         try:
-            ticker_data = download(symbol=ticker + '.NS', interval=interval, period=period, start_date=start_date, end_date=end_date)
+            if start_date and end_date:
+                ticker_data = download(symbol=ticker + '.NS', interval=interval, start_date=start_date, end_date=end_date)
+            else:
+                ticker_data = download(symbol=ticker + '.NS', interval=interval, period=period)
             close = ticker_data['Close']
             close_prices.append(close)
             close_cleaned = close.values.ravel()
@@ -114,7 +117,7 @@ col3, col4 = st.columns(2)
 with col3:
     START_DATE = st.date_input('Start Date', value=None)
 with col4:
-    END_DATE = st.date_input('End Date', value=None, max_value=today)
+    END_DATE = st.date_input('End Date', value=today, max_value=None)
 
 if st.button('Run Analysis'):
     if selected_file is not None:
