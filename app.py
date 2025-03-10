@@ -88,9 +88,9 @@ st.set_page_config(layout="wide")
 st.title('RSI Divergence Screener')
 
 # Inputs
-uploaded_file = st.file_uploader("Upload CSV with Symbols or select from below (for Ticker name only, data will be downloaded by Yfinance function)", type=["csv"])
-file_list = st.radio("Select list category below", ["NSE FnO","NIfty 500", "Uploaded file"])
-st.subheader('---')
+uploaded_file = st.file_uploader("Upload CSV with Symbols or select from below (for Ticker name only, data will be sourced by builtin function)", type=["csv"])
+file_list = st.radio("Select list category below", ["NSE FnO","NIfty 500", "Uploaded file"], horizontal=True)
+st.subheader(divider=True)
 
 if file_list == 'Uploaded file':
     selected_file = uploaded_file
