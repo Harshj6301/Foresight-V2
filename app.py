@@ -114,7 +114,7 @@ col3, col4 = st.columns(2)
 with col3:
     START_DATE = st.date_input('Start Date', value=None)
 with col4:
-    END_DATE = st.date_input('End Date', value=today, max_value=today)
+    END_DATE = st.date_input('End Date', value=None, max_value=today)
 
 if st.button('Run Analysis'):
     if selected_file is not None:
