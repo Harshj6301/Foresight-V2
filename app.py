@@ -14,7 +14,7 @@ def download(symbol, interval, period='1mo', start_date=None, end_date=None):
     return data
 
 #@st.cache_data
-def calculate_rsi_wilder(close_prices, period=14):
+def calculate_rsi_wilder(close_prices, period=13):
     delta = close_prices.diff()
     gain = delta.where(delta > 0, 0)
     loss = -delta.where(delta < 0, 0)
