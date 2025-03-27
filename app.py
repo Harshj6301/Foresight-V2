@@ -141,9 +141,9 @@ if st.button('Run Analysis'):
             st.subheader('Screened Tickers:')
             st.write(screened)
             if screened:
-            csv_file = export_screened_list(screened)
-            with open(csv_file, "rb") as file:
-                st.download_button(label="Download Screened List as CSV", data=file, file_name="screened_stocks.csv", mime="text/csv")
+                csv_file = export_screened_list(screened)
+                with open(csv_file, "rb") as file:
+                    st.download_button(label="Download Screened List as CSV", data=file, file_name="screened_stocks.csv", mime="text/csv")
         
             st.write(df.info())
             del TICKERS, divergence_values, closes, rsi_values #clear memory
