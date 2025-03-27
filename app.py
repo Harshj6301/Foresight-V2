@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 from scipy.signal import find_peaks
+import datetime
 
 # Symbol path
 NSE_FnO = "Assets/symbol lists/Futures all scan, Technical Analysis Scanner.csv"
@@ -62,6 +63,15 @@ def find_closest_index(indices, target_idx, max_distance=200):
         return min_idx
     return None
 
+# Export screened list
+def export_screened_list(screened_list, filename="screened_stocks.csv"):
+    """Exports the screened list to a CSV file."""
+    df = pd.DataFrame({"Ticker": screened_list})
+    df.to_csv(filename, index=False)
+    return filename # Return the filename for download purposes.
+
+
+# Main function
 def main(tickers, interval, period='1mo', start_date=None, end_date=None):
     all_divergences = {}
     close_prices = []
@@ -130,6 +140,11 @@ if st.button('Run Analysis'):
                     screened.append(tickers)
             st.subheader('Screened Tickers:')
             st.write(screened)
+            if screened:
+            csv_file = export_screened_list(screened)
+            with open(csv_file, "rb") as file:
+                st.download_button(label="Download Screened List as CSV", data=file, file_name="screened_stocks.csv", mime="text/csv")
+        
             st.write(df.info())
             del TICKERS, divergence_values, closes, rsi_values #clear memory
         except Exception as e:
